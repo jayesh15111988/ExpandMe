@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        var gameLevelNumber = -1;
+        var isgameEnd = false;
+        var particleNumbers = 5;
+        var pointsRequired = 20;
+        var stageNumber = 1;
+        var isPut = 0;
+        var reductionFactor=0;
+        var intervalGame;
+        var boxStart;
+        var pauseGameBox;
+
+        function enable(e) {
+            var canvasOffset = $("#mycan").offset();
+            var offsetX = canvasOffset.left;
+            var offsetY = canvasOffset.top;
+
+
+            mx = e.pageX - offsetX;
+            my = e.pageY - offsetY;
+            var can = document.getElementById("mycan");
+            if (mx >= can.width/2 && mx <= (200 + can.width / 2) && my >= can.height/3 && my <= (100 + can.height / 3)) {
+//if(isPut==1){
+
+  //              if (typeof intervalGame != "undefined") clearInterval(intervalGame);
+
+                start = new Date().getTime();
+                var gameLevel = 1;
+
+
+
+//alert("start");
+//if(typeof intervalGame=="undefined")
+            if (isPut == 1) {
+                return 1;
+//alert("one");
+            }
+
+else{
+//alert("zero");
+                moveBalls();
+isPut=1;
+}
+            }
+
+            if (mx > (can.width/2)+100 && mx <= (can.width/2)+200 && my >= 0 && my <= (50)) {
+                moveBalls();
+            }
+
+            if (mx >= can.width/2 && mx <= (can.width/2)+100 && my >= 0 && my <= 50) {
+
+alert("sdf");
+
+//here
+                if (typeof intervalGame != "undefined") clearInterval(intervalGame);
+
+                var ctx1 = can.getContext("2d");
+
+                //ctx1.fillStyle = "rgba(255,255,0,0.5)";
+                //ctx1.fillRect(can.width/2, 0, 100, 50);
+                /*ctx.fillStyle = "rgba(255,25,25,0.5)";
+                ctx.fillRect(can.width/2, 0, 100, 50);
+                ctx.fillStyle = "rgba(123,119,198,1)";
+                ctx.fillText("click to close", (can.width/2)+20, 25);
+*/
+
+                ctx1.fillStyle = "rgba(0,255,255,0.5)";
+                ctx1.fillRect((can.width/2)+100, 0, 100, 50);
+                ctx1.fillStyle = "rgba(222,21,25,1)";
+                ctx1.fillText("click to restart", (can.width/2)+125,25);
+            }
+
+        }
+
+        function disable() {}
+
+        this.addEventListener('mouseup', enable);
+        this.addEventListener('mousedown', disable);
+
+
+        $(document).ready(function () {
+
+            var can = document.getElementById("mycan");
+            if (can.width < window.innerWidth) {
+                can.width = window.innerWidth ||
+                    document.documentElement.clientWidth ||
+                    document.body.clientWidth;
+            }
+            if (can.height < window.innerHeight) {
+                can.height = window.innerHeight ||
+                    document.documentElement.clientHeight ||
+                    document.body.clientHeight;
+
+            }
+
+            var con = can.getContext("2d");
+            con.fillStyle = "rgba(0,0,45,1)";
+            con.fillRect(0, 0, can.width, can.height);
+            con.strokeStyle = "rgba(23,34,33,1)";
+            con.strokeRect(can.width/2, can.height/3, 200, 100);
+
+
+            con.fillStyle = "rgba(255,0,0,1)";
+
+             con.fillText("Click to start the Game", (can.width/2)+5, ((can.height/3)+50));
+             con.fillText("Grab power from other balls", (can.width/2)+5, ((can.height/3)+60));
+              con.fillText("Make sure you don't die! Enjoy!!", (can.width/2)+5, ((can.height/3)+70));
+
+
+        })
+
+        function mouse_monitor(e) {
+            if (!isgameEnd) {
+                if (isPut == 1) {
+
+                    return 1;
+                }
+
+
+
+                var canvasOffset = $("#mycan").offset();
+                var offsetX = canvasOffset.left;
+                var offsetY = canvasOffset.top;
+                mx = e.pageX - offsetX;
+                my = e.pageY - offsetY;
+            }
+        }
+
+        var moveBalls = function () {
+
+            var can = document.getElementById("mycan");
+            if (can.width < window.innerWidth) {
+                can.width = window.innerWidth;
+            }
+            if (can.height < window.innerHeight) {
+                can.height = window.innerHeight;
+            }
+            var radiusSmall = 10;
+            points = 0;
+
+
+            //alert("in moveBalls");
+
+
+
+
+            var ctx = can.getContext("2d");
+
+
+            var x = 100,
+                y = 100;
+            this.addEventListener('mousemove', mouse_monitor);
+            //alert(points);
+            function draw() {
+
+//if(particle.length<particleNumbers){
+//	particle.push(new ranpoint());
+//}
+
+                ctx.globalCompositeOperation = "source-over";
+
+
+                ctx.fillStyle = "rgba(0,0,0,1)";
+                ctx.fillRect(0, 0, can.width, can.height);
+                //ctx.fillStyle = "rgba(0,234,0,1)";
+                //ctx.fillText("Score is!" + points, 100, 400);
+                ctx.fillStyle = "rgba(255,25,25,0.5)";
+                ctx.fillRect(can.width/2, 0, 100, 50);
+                ctx.fillStyle = "rgba(123,119,198,1)";
+                ctx.fillText("click to close", (can.width/2)+20, 25);
+
+
+                ctx.globalCompositeOperation = "lighter";
+                ctx.fillStyle = "rgba(233,23,24,1)";
+                ctx.beginPath();
+                ctx.arc(mx, my, radiusSmall, 0, 2 * Math.PI, false);
+               //if(reductionFactor!=0.0)
+                radiusSmall -= (0.1+reductionFactor);
+            //else
+            //	radiusSmall -= 0.01;
+                if (radiusSmall < 0.001) {
+                    particleNumbers = 5;
+                    pointsRequired = 20;
+                    radiusSmall = 10;
+                    ctx.fillStyle = "rgba(0,23,34,0.5)";
+
+                    ctx.fillRect(0, 0, can.width, can.height);
+
+                    ctx.strokeStyle = "rgba(23,134,133,1)";
+                    ctx.strokeRect(can.width/2, can.height/3, 200, 100);
+
+
+                    ctx.fillStyle = "rgba(255,0,0,1)";
+
+
+
+                    //ctx.strokeRect(10, 10, 180, 80);
+
+                    var end = new Date().getTime();
+                    var totalTime = (end - start) / 1000;
+                    ctx.fillText("Game Over Score is!" + points , (can.width/2)+10, (can.height/3)+20);
+                    ctx.fillText("Click to restart", (can.width/2)+10, (can.height/3)+40);
+                    ctx.fillText("Maximum time played" + totalTime + " Seconds", (can.width/2)+10, (can.height/3)+60);
+                   // ctx.fillText("Maximum time played" + totalTime + " Seconds", (can.width/2)+10, (can.height/3)+80);
+                    stageNumber = 1;
+                    isPut=0;
+
+                    clearInterval(intervalGame);
+
+
+
+                }
+
+                ctx.closePath();
+                ctx.stroke();
+
+                for (var j = 0; j < particle.length; j++) {
+                    document.getElementById("dist2").innerHTML = j;
+                    var par1 = particle[j];
+
+                    var centerDistance = Math.sqrt(Math.pow((par1.x - mx), 2) + Math.pow((par1.y - my), 2));
+
+                    if (centerDistance <= par1.radius + radiusSmall) {
+
+
+//particle.splice(j,1);
+
+                        radiusSmall += par1.radius / 10;
+                        points += par1.radius / 10;
+                        if (points >= pointsRequired) {
+//                            alert("you won" + points + "aad" + pointsRequired);
+                            particleNumbers += 10;
+                            pointsRequired += 20;
+                            reductionFactor+=0.005;
+
+                            clearInterval(intervalGame);
+
+
+   							ctx.fillStyle = "rgba(0,23,34,0.5)";
+
+                            ctx.fillRect(0, 0, can.width, can.height);
+
+                            ctx.strokeStyle = "rgba(23,134,133,1)";
+                    ctx.strokeRect(can.width/2, can.height/3, 200, 100);
+
+
+                    ctx.fillStyle = "rgba(255,0,0,1)";
+
+
+                            var end = new Date().getTime();
+                            var totalTime = (end - start) / 1000;
+                            ctx.fillText("congrats Score is!" + points,  (can.width/2)+10, (can.height/3)+20);
+                            ctx.fillText("Click to restart",  (can.width/2)+10, (can.height/3)+40);
+                            ctx.fillText("Maximum time played" + totalTime + " Seconds",  (can.width/2)+10, (can.height/3)+60);
+                            ctx.fillText("Going to stage" + (++stageNumber),  (can.width/2)+10, (can.height/3)+80);
+                            points = 0;
+                        isPut=0;
+                        }
+                        document.getElementById("dist2").innerHTML = points; //par1.radius+radiusSmall;  
+                    }
+
+
+                }
+
+
+
+
+                for (var i = 0; i < particle.length; i++) {
+
+
+                    var part = particle[i];
+                    ctx.beginPath();
+                    ctx.fillStyle = part.color;
+                    ctx.arc(part.x, part.y, part.radius, 0, 2 * Math.PI, false);
+                    ctx.closePath();
+                    ctx.fill();
+                    part.x += part.vx;
+                    part.y += part.vy;
+                    if (part.x < 2 * part.radius) part.x = Math.random() * can.width;
+                    if (part.y < 2 * part.radius) part.y = Math.random() * can.height;
+                    if (part.x > can.width + part.radius) part.x = Math.random() * can.width;
+                    if (part.y > can.height + part.radius) part.y = Math.random() * can.height;
+
+
+
+                }
+            }
+
+            function ranpoint() {
+
+                this.x = Math.random() * 100;
+                this.y = Math.random() * 100;
+                if (gameLevelNumber == -1) {
+                    gameLevelNumber = 1;
+                } else {
+                    gameLevelNumber *= 0.75;
+                }
+                this.vx = (Math.random() * 25 * gameLevelNumber) - Math.random() * 10;
+                this.vy = (Math.random() * 15 * gameLevelNumber) - Math.random() * 10;
+
+                var r = Math.random() * 256 >> 0;
+                var g = Math.random() * 256 >> 0;
+                var b = Math.random() * 256 >> 0;
+
+                this.color = "rgba(" + r + "," + g + "," + b + ",0.5)";
+
+                this.radius = Math.random() * 20;
+
+            }
+
+            var particle = [];
+            for (var i = 0; i < particleNumbers; i++) {
+
+                particle.push(new ranpoint());
+
+            }
+
+            intervalGame = setInterval(draw, 33);
+        }
+    </script>
+    <meta charset="utf-8">
+
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>HTML</title>
+    <meta name="description" content="">
+    <meta name="author" content="jayeshkawli">
+
+    <meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+    <!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+
+<body>
+
+    <canvas id="mycan" width="800" height="800">
+
+    </canvas>
+
+    <div id="dist">
+
+    </div>
+    <div id="dist2">
+
+    </div>
+
+
+</body>
+
+</html>
