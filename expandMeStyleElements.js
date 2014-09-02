@@ -1,7 +1,7 @@
 
 var mainInstructionsView=$( "#instructionsDiv" )[0];
 var okButton=$( "#okButton");
-var summaryButton=$("#summary");
+
 
 var actualGameInstructionsDiv=$("#gameInstructions")[0];
 
@@ -37,8 +37,7 @@ okButton[0].style.top = ( (instructionViewHeight/2) -50)+ 'px';
 okButton[0].style.left = (instructionViewWidth -instructionViewLeft-90)+ 'px';
 
 
-summaryButton[0].style.left=(instructionViewWidth -instructionViewLeft-60)+'px';
-summaryButton[0].style.top=okButton[0].style.top;
+
 
 okButton.bind('click', function() {
 
@@ -56,9 +55,7 @@ moveBalls();
 });
 
 
-summaryButton.bind('click', function() {
 
-});
 
 function displayInstructionsViewWithInstructions(instructions,isGameFinished){
 
@@ -68,17 +65,20 @@ function displayInstructionsViewWithInstructions(instructions,isGameFinished){
 
 fillColorWithDefaultLightGreen();
 mainInstructionsView.style.display='block';
-actualGameInstructionsDiv.innerHTML=instructions;
+
 
 if(isGameFinished){
 
+//Add all points and total itme show it on the top
+//Summarize all points on each stage and display in table format
+//TO DO for tomorrow
+
+
 	
-	//Initialize summary holder
-	summaryHolderForGameDuration.length=0;
-summaryButton[0].style.display='inline';
 }
 else{
-summaryButton[0].style.display='none';
+	actualGameInstructionsDiv.innerHTML=instructions;
+
 }
 
 
