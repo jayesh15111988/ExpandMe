@@ -1,0 +1,35 @@
+#canvasWrap { position:relative 
+z-index: 0;
+
+	} /* Make this a positioned parent */
+
+#instructionsDiv     
+{ 
+	position:absolute; 
+	left:20px; 
+	top:10px;
+	z-index:100;
+	width:500px;
+	height:200px;
+	background-color:rgba(23,45,44,0.5);
+	display: none;
+}
+
+#expandMeCanvas{
+z-index: 0;
+}
+
+#okButton{
+	position: relative;
+	width: 175px;
+	height:40px;
+}
+
+#gameInstructions{
+	position: relative;
+	height: 90px;
+	background-color: blue;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 100px;
+}
