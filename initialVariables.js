@@ -1,5 +1,6 @@
  //Level of the game user is in - Starts with level one
         var gameLevelNumber = -1;
+         var gameLevel;
     //Did user die?
         var isgameEnd = false;
     //Number of Moving particles visible on the screen
@@ -15,11 +16,12 @@
         var reductionFactor=0;
         //Interval to set / reset game frames
         var intervalGame;
-
+        var points = 0;
         var boxStart;
         var pauseGameBox;
 
         //Maintaining global vars for canvas elements and 2D context
+var summaryHolderForGameDuration=[];
         
          var can = document.getElementById('expandMeCanvas');
          var canvasContext = can.getContext('2d');

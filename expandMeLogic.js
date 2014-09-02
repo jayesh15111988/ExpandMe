@@ -17,34 +17,13 @@ function enable(e) {
             my = e.pageY - offsetY;
            
 
-            if (mx >= can.width/2 && mx <= (200 + can.width / 2) && my >= can.height/3 && my <= (100 + can.height / 3)) {
 
-
-                start = new Date().getTime();
-                var gameLevel = 1;
-
-
-
+           
 
             
 
 
-
-                moveBalls();
-
-
-            }
-
-            if (mx > (can.width/2)+100 && mx <= (can.width/2)+200 && my >= 0 && my <= (50)) {
-                moveBalls();
-            }
-
-            if (mx >= can.width/2 && mx <= (can.width/2)+100 && my >= 0 && my <= 50) {
-
-
-                if (typeof intervalGame != "undefined") {
-                    clearInterval(intervalGame);
-                }
+            
 
                 
 
@@ -54,9 +33,9 @@ function enable(e) {
                 //canvascanvasContexttext.fillRect((can.width/2)+100, 0, 100, 50);
                 //canvascanvasContexttext.fillStyle = "rgba(222,21,25,1)";
                 //canvascanvasContexttext.fillText("click to restart", (can.width/2)+125,25);
-                displayInstructionsViewWithInstructions("Click Ok to restart");
+            //    displayInstructionsViewWithInstructions("Click Ok to restart");
 
-            }
+            
 
         }
 
@@ -82,10 +61,10 @@ function enable(e) {
             }
 
             
-            canvasContext.fillStyle = "rgba(0,0,45,1)";
+            canvasContext.fillStyle = "rgba(120,190,125,0.5)";
             canvasContext.fillRect(0, 0, can.width, can.height);
 
-            displayInstructionsViewWithInstructions("Click to start the Game. Grab power from other balls. Make sure you don't die! Enjoy!!");
+            displayInstructionsViewWithInstructions("Click to start the Game. Grab power from other balls. Make sure you don't die! Enjoy!!",0);
 
             /*canvasContext.strokeStyle = "rgba(23,34,33,1)";
             canvasContext.strokeRect(can.width/2, can.height/3, 200, 100);
@@ -126,7 +105,7 @@ function enable(e) {
                 can.height = window.innerHeight;
             }
             var radiusSmall = 10;
-            points = 0;
+            
 
 
             
@@ -184,23 +163,36 @@ function enable(e) {
                     var end = new Date().getTime();
                     var totalTime = (end - start) / 1000;
                     
-                    var gameOverInstructions="Game Over and Score is! "+points +" Click to restart"+"Maximum time played" + totalTime+ " Seconds";
+                    
+                    
+points=Number((points).toFixed(2));
+totalTime=Number((totalTime).toFixed(2));
+
+summaryHolderForGameDuration.push({'points':points,'timeSpent':totalTime,'stage':stageNumber});                    
+                    var gameOverInstructions="Sorry, your Game is Over. Total score reached so far upto this level is -  "+points +" Click Ok to restart the game. Maximum total time this game played is -> " + totalTime+ " Seconds";
 
                     displayInstructionsViewWithInstructions(gameOverInstructions,1);
+
+                    console.log("Total summary is"+ JSON.stringify(summaryHolderForGameDuration));
+                    points=0;
                     //canvasContext.fillText( + points , (can.width/2)+10, (can.height/3)+20);
                     //canvasContext.fillText(, (can.width/2)+10, (can.height/3)+40);
                     //canvasContext.fillText(, (can.width/2)+10, (can.height/3)+60);
                    
                     stageNumber = 1;
+                    gameLevelNumber=-1;
+                    gameLevel=1;
+                    if(typeof intervalGame !=='undefined'){
 
                     clearInterval(intervalGame);
+                }
                 }
 
                 canvasContext.closePath();
                 canvasContext.stroke();
 
                 for (var j = 0; j < particle.length; j++) {
-                    document.getElementById("dist2").innerHTML = j;
+                    
                     var par1 = particle[j];
 
                     var centerDistance = Math.sqrt(Math.pow((par1.x - mx), 2) + Math.pow((par1.y - my), 2));
@@ -216,7 +208,7 @@ function enable(e) {
 
                             particleNumbers += 10;
                             pointsRequired += 20;
-                            reductionFactor+=0.005;
+                            reductionFactor+=0.05;
 
                             clearInterval(intervalGame);
 
@@ -232,19 +224,26 @@ function enable(e) {
                     //canvasContext.fillStyle = "rgba(255,0,0,1)";
 
 
-                      //      var end = new Date().getTime();
-                        //    var totalTime = (end - start) / 1000;
+                        
                          //   canvasContext.fillText("canvasContextgrats Score is!" + points,  (can.width/2)+10, (can.height/3)+20);
                            // canvasContext.fillText("Click to restart",  (can.width/2)+10, (can.height/3)+40);
                            // canvasContext.fillText("Maximum time played" + totalTime + " SecanvasContextds",  (can.width/2)+10, (can.height/3)+60);
                            // canvasContext.fillText("Going to stage" + (++stageNumber),  (can.width/2)+10, (can.height/3)+80);
+                            var end = new Date().getTime();
+                            var totalTime = (end - start) / 1000;
 
-                           var goingToNextStageInstruction = "canvasContextgrats Score is! " + points+" Maximum time played " + totalTime + " Seconds. And Going to stage " + (++stageNumber);
-                           displayInstructionsViewWithInstructions(goingToNextStageInstruction)
-                            points = 0;
+totalTime= Number((totalTime).toFixed(2));
+points=Number((points).toFixed(2));
+
+summaryHolderForGameDuration.push({'points':points,'timeSpent':totalTime,'stage':stageNumber});
+                           var goingToNextStageInstruction = "Congrats, your total Score is - " + points+" Maximum total time this Game played is " +totalTime + " Seconds. You are Going to the stage " + (++stageNumber);
+                           points=0;
+
+                           displayInstructionsViewWithInstructions(goingToNextStageInstruction,0)
+                            
                         
                         }
-                        document.getElementById("dist2").innerHTML = points; //par1.radius+radiusSmall;  
+                        
                     }
 
 

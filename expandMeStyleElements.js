@@ -1,6 +1,8 @@
 
 var mainInstructionsView=$( "#instructionsDiv" )[0];
 var okButton=$( "#okButton");
+var summaryButton=$("#summary");
+
 var actualGameInstructionsDiv=$("#gameInstructions")[0];
 
 
@@ -26,35 +28,67 @@ actualGameInstructionsDiv.style.top='30px';
 actualGameInstructionsDiv.style.left='0px';
 actualGameInstructionsDiv.style.height=instructionViewHeight/2+'px';
 actualGameInstructionsDiv.style.width=instructionViewWidth+'px';
-actualGameInstructionsDiv.style.lineHeight=instructionViewHeight/2+'px';
+
+//Commenting out for a while - Creating problem for long strings 
+//actualGameInstructionsDiv.style.lineHeight=instructionViewHeight/2+'px';
 
 
 okButton[0].style.top = ( (instructionViewHeight/2) -50)+ 'px';
 okButton[0].style.left = (instructionViewWidth -instructionViewLeft-90)+ 'px';
 
 
+summaryButton[0].style.left=(instructionViewWidth -instructionViewLeft-60)+'px';
+summaryButton[0].style.top=okButton[0].style.top;
+
 okButton.bind('click', function() {
 
  hideInstructionsView();
 
  start = new Date().getTime();
- var gameLevel = 1;
+
+
+ 
 
 moveBalls();
 
 
- //if (typeof intervalGame != "undefined") {
-   //                 clearInterval(intervalGame);
-     //           }
-
   
 });
 
-function displayInstructionsViewWithInstructions(instructions,toStartGame){
-mainInstructionsView.style.display='inline';
+
+summaryButton.bind('click', function() {
+
+});
+
+function displayInstructionsViewWithInstructions(instructions,isGameFinished){
+
+    if (typeof intervalGame != "undefined") {
+                    clearInterval(intervalGame);
+           }
+
+fillColorWithDefaultLightGreen();
+mainInstructionsView.style.display='block';
 actualGameInstructionsDiv.innerHTML=instructions;
 
+if(isGameFinished){
 
+	
+	//Initialize summary holder
+	summaryHolderForGameDuration.length=0;
+summaryButton[0].style.display='inline';
+}
+else{
+summaryButton[0].style.display='none';
+}
+
+
+}
+
+function fillColorWithDefaultLightGreen(){
+canvasContext.fillStyle = "rgba(255,255,255,1.0)";
+canvasContext.fillRect(0, 0, can.width, can.height);
+canvasContext.fillStyle = "rgba(120,190,125,0.5)";
+canvasContext.fillRect(0, 0, can.width, can.height);
 
 }
 
