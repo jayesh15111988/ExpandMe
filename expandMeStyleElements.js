@@ -65,12 +65,12 @@ function displayInstructionsViewWithInstructions(instructions, isGameFinished) {
         HTMLTableString += 'Click OK to restart the game';
 
         //Rounding off score and time to two decimal points
-        totalPoints = Number((totalPoints).toFixed(2));
-        timeSpent = Number((timeSpent).toFixed(2));
+        totalPoints = Number((totalPoints).toFixed(decimalPointsToRoundTo));
+        timeSpent = Number((timeSpent).toFixed(decimalPointsToRoundTo));
 
         actualGameInstructionsDiv.innerHTML = "Sorry, your Game is Over. Total score reached so far upto this level is : " + totalPoints + "Maximum total time this game played is : " + timeSpent + " Seconds<br/><br/>";
         actualGameInstructionsDiv.innerHTML += HTMLTableString;
-        console.log("Accumulated score data is" + summaryHolderForGameDuration);
+        
         summaryHolderForGameDuration.length = 0;
 
     } else {

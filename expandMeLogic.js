@@ -40,10 +40,9 @@
         if (can.height < window.innerHeight) {
             can.height = window.innerHeight;
         }
-        var radiusSmall = 10;
+       
 
-        var x = 100,
-            y = 100;
+        
         this.addEventListener('mousemove', mouse_monitor);
 
         function drawFrameOnScreen() {
@@ -55,20 +54,20 @@
 
             canvasContext.strokeStyle = "rgba(23,134,133,1)";
             canvasContext.beginPath();
-            canvasContext.arc(mx, my, radiusSmall, 0, 2 * Math.PI, false);
+            canvasContext.arc(mx, my, playerRadius, 0, 2 * Math.PI, false);
 
-            radiusSmall -= (0.1 + reductionFactor);
+            playerRadius -= (0.1 + reductionFactor);
 
-            if (radiusSmall < 0.001) {
+            if (playerRadius < 0.001) {
                 particleNumbers = 5;
                 pointsRequired = 20;
-                radiusSmall = 10;
+                playerRadius = 10;
 
                 var end = new Date().getTime();
                 var totalTime = (end - start) / 1000;
 
-                points = Number((points).toFixed(2));
-                totalTime = Number((totalTime).toFixed(2));
+                points = Number((points).toFixed(decimalPointsToRoundTo));
+                totalTime = Number((totalTime).toFixed(decimalPointsToRoundTo));
 
                 summaryHolderForGameDuration.push({
                     'points': points,
@@ -76,7 +75,7 @@
                     'stage': stageNumber
                 });
                 
-
+                //Second parameter 1 indicates our game is over
                 displayInstructionsViewWithInstructions("", 1);
 
                 points = 0;
@@ -84,6 +83,7 @@
                 stageNumber = 1;
                 gameLevelNumber = -1;
                 gameLevel = 1;
+                
                 if (typeof intervalGame !== 'undefined') {
 
                     clearInterval(intervalGame);
@@ -99,7 +99,7 @@
 
                 var centerDistance = Math.sqrt(Math.pow((par1.x - mx), 2) + Math.pow((par1.y - my), 2));
 
-                if (centerDistance <= par1.radius + radiusSmall) {
+                if (centerDistance <= par1.radius + playerRadius) {
 
                     //Remove current point from array to avoid cases of cheating
                     particle.splice(j, 1);
@@ -107,22 +107,25 @@
                     //Add new random point to maintain cardinality of points on screen
                     particle.push(new createNewRandomBall());
 
-                    radiusSmall += par1.radius / 3;
+                    playerRadius += par1.radius / 3;
                     points += par1.radius / 3;
 
                     if (points >= pointsRequired) {
 
-                        particleNumbers += 10;
-                        pointsRequired += 20;
-                        reductionFactor += 0.1;
+                        particleNumbers += particleNumbersIncrement;
+                        pointsRequired += pointsRequiredToGoToNextStepIncrement;
+                        reductionFactor += playerRadiusReductionFactorIncrement;
+
+                        //No increment in ball radius while going to next stage - It gives undue advantage to player
+                        //playerRadius+=playerRadiusNextStageIncrement;
 
                         clearInterval(intervalGame);
 
                         var end = new Date().getTime();
                         var totalTime = (end - start) / 1000;
 
-                        totalTime = Number((totalTime).toFixed(2));
-                        points = Number((points).toFixed(2));
+                        totalTime = Number((totalTime).toFixed(decimalPointsToRoundTo));
+                        points = Number((points).toFixed(decimalPointsToRoundTo));
 
                         summaryHolderForGameDuration.push({
                             'points': points,
@@ -132,7 +135,7 @@
 
                         var goingToNextStageInstruction = "Congrats, your total Score is - " + points + " Maximum total time this Game played is " + totalTime + " Seconds. You are Going to the stage " + (++stageNumber);
                         points = 0;
-
+                        playerRadius=10;
                         displayInstructionsViewWithInstructions(goingToNextStageInstruction, 0)
 
                     }
@@ -179,16 +182,16 @@
             } else {
 
                 //This factor determines how fast other balls move on the screen
-                gameLevelNumber *= 1.05;
+                gameLevelNumber =gameLevelNumber * ballsVelocityFactorIncrementParameter;
             }
-            this.vx = (Math.random() * 5 * gameLevelNumber);
-            this.vy = (Math.random() * 5 * gameLevelNumber);
+            this.vx = (Math.random() * 20 * gameLevelNumber);
+            this.vy = (Math.random() * 20 * gameLevelNumber);
 
             this.color = getNewColorWithRandomRGBValues();
 
             //Maximum radius limited to 20 units for any random ball thus generated on screen
 
-            this.radius = Math.random() * 20;
+            this.radius = Math.random() * maximumBallRadius;
 
         }
 
@@ -202,7 +205,7 @@
 
         }
 
-        intervalGame = setInterval(drawFrameOnScreen, 33);
+        intervalGame = setInterval(drawFrameOnScreen, (1 / frameRate) * 1000);
     }
 
     function getNewColorWithRandomRGBValues() {
