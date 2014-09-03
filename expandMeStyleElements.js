@@ -1,98 +1,98 @@
+var mainInstructionsView = $("#instructionsDiv")[0];
+var okButton = $("#okButton");
 
-var mainInstructionsView=$( "#instructionsDiv" )[0];
-var okButton=$( "#okButton");
+var actualGameInstructionsDiv = $("#gameInstructions")[0];
 
-
-var actualGameInstructionsDiv=$("#gameInstructions")[0];
-
-
-
-
-
-var instructionViewWidth=screen.width/2;
-var instructionViewHeight=screen.height/2;
-var instructionViewTop=screen.height/8 ;
-var instructionViewLeft=screen.width/4;
+var instructionViewWidth = screen.width / 2;
+var instructionViewHeight = screen.height / 2;
+var instructionViewTop = screen.height / 8;
+var instructionViewLeft = screen.width / 4;
 
 mainInstructionsView.style.width = instructionViewWidth + 'px';
 mainInstructionsView.style.left = instructionViewLeft + 'px';
 
 mainInstructionsView.style.height = instructionViewHeight + 'px';
-mainInstructionsView.style.top = instructionViewTop+ 'px';
+mainInstructionsView.style.top = instructionViewTop + 'px';
+
+actualGameInstructionsDiv.style.top = '30px';
+actualGameInstructionsDiv.style.left = '0px';
+actualGameInstructionsDiv.style.height = instructionViewHeight / 2 + 'px';
+actualGameInstructionsDiv.style.width = instructionViewWidth + 'px';
 
 
-
-
-
-actualGameInstructionsDiv.style.top='30px';
-actualGameInstructionsDiv.style.left='0px';
-actualGameInstructionsDiv.style.height=instructionViewHeight/2+'px';
-actualGameInstructionsDiv.style.width=instructionViewWidth+'px';
-
-//Commenting out for a while - Creating problem for long strings 
-//actualGameInstructionsDiv.style.lineHeight=instructionViewHeight/2+'px';
-
-
-okButton[0].style.top = ( (instructionViewHeight/2) -50)+ 'px';
-okButton[0].style.left = (instructionViewWidth -instructionViewLeft-90)+ 'px';
-
-
-
+okButton[0].style.top = ((instructionViewHeight / 2) - 50) + 'px';
+okButton[0].style.left = (instructionViewWidth - instructionViewLeft - 90) + 'px';
 
 okButton.bind('click', function() {
 
- hideInstructionsView();
+    hideInstructionsView();
 
- start = new Date().getTime();
+    start = new Date().getTime();
 
+    moveBalls();
 
- 
-
-moveBalls();
-
-
-  
 });
 
-
-
-
-function displayInstructionsViewWithInstructions(instructions,isGameFinished){
+function displayInstructionsViewWithInstructions(instructions, isGameFinished) {
 
     if (typeof intervalGame != "undefined") {
-                    clearInterval(intervalGame);
-           }
+        clearInterval(intervalGame);
+    }
 
-fillColorWithDefaultLightGreen();
-mainInstructionsView.style.display='block';
+    fillColorWithDefaultLightGreen();
+    mainInstructionsView.style.display = 'block';
 
+    if (isGameFinished) {
 
-if(isGameFinished){
+        //Add all points and total itme show it on the top
+        //Summarize all points on each stage and display in table format
+        //TO DO for tomorrow
+        
+        var totalPoints = 0;
+        var timeSpent = 0;
+        var stagesCompleted = Object.keys(summaryHolderForGameDuration).length - 1;
+        var individualStageStatistics = [];
+        var HTMLTableString = '<table border="1" align="center" style="width:' + mainInstructionsView.style.width + '"><tr><td>Stage</td><td>Points</td><td>Total time</td></tr>';
 
-//Add all points and total itme show it on the top
-//Summarize all points on each stage and display in table format
-//TO DO for tomorrow
+        for (var index in summaryHolderForGameDuration) {
+            individualStageStatistics = summaryHolderForGameDuration[index];
+            totalPoints += individualStageStatistics['points'];
+            timeSpent += individualStageStatistics['timeSpent'];
+            HTMLTableString += '<tr><td>' + individualStageStatistics['stage'] + '</td><td>' + individualStageStatistics['points'] + '</td><td>' + individualStageStatistics['timeSpent'] + '</td></tr>';
+        }
 
+        HTMLTableString += '</table>';
+        HTMLTableString += 'Click OK to restart the game';
 
-	
+        //Rounding off score and time to two decimal points
+        totalPoints = Number((totalPoints).toFixed(2));
+        timeSpent = Number((timeSpent).toFixed(2));
+
+        actualGameInstructionsDiv.innerHTML = "Sorry, your Game is Over. Total score reached so far upto this level is : " + totalPoints + "Maximum total time this game played is : " + timeSpent + " Seconds<br/><br/>";
+        actualGameInstructionsDiv.innerHTML += HTMLTableString;
+        console.log("Accumulated score data is" + summaryHolderForGameDuration);
+        summaryHolderForGameDuration.length = 0;
+
+    } else {
+    	
+    	//If game is still in progress, show regular pints while making trnasition to next level 
+    	//along with other instructions
+
+        actualGameInstructionsDiv.innerHTML = instructions;
+
+    }
+
 }
-else{
-	actualGameInstructionsDiv.innerHTML=instructions;
+
+function fillColorWithDefaultLightGreen() {
+    canvasContext.fillStyle = "rgba(255,255,255,1.0)";
+    canvasContext.fillRect(0, 0, can.width, can.height);
+    canvasContext.fillStyle = "rgba(120,190,125,0.5)";
+    canvasContext.fillRect(0, 0, can.width, can.height);
 
 }
 
+function hideInstructionsView() {
+    mainInstructionsView.style.display = 'none';
 
 }
-
-function fillColorWithDefaultLightGreen(){
-canvasContext.fillStyle = "rgba(255,255,255,1.0)";
-canvasContext.fillRect(0, 0, can.width, can.height);
-canvasContext.fillStyle = "rgba(120,190,125,0.5)";
-canvasContext.fillRect(0, 0, can.width, can.height);
-
-}
-
-function hideInstructionsView(){
-	 mainInstructionsView.style.display='none';
-
-	}

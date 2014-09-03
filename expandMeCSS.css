@@ -1,49 +1,40 @@
-#canvasWrap { position:relative 
-z-index: 0;
-
-	} /* Make this a positioned parent */
-
-
-#instructionsDiv     
-{ 
-	position:absolute; 
-	left:20px; 
-	top:10px;
-	z-index:100;
-	width:500px;
-	height:200px;
-	background-color:rgba(240,123,22,0.6);
-	display: none;
+#canvasWrap {
+    position: relative;
+	z-index: 0;
 }
 
-#expandMeCanvas{
-z-index: 0;
+#instructionsDiv {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    z-index: 100;
+    width: 500px;
+    height: 200px;
+    background-color: rgba(240,123,22,0.6);
+    display: none;
 }
 
-button.generalButton{
-	position: relative;;
+#expandMeCanvas {
+    z-index: 0;
+}
+
+button.generalButton {
+    position: relative;
 	width: 175px;
-	height:40px;
-background-color: rgba(94,230,153,1);
+    height: 40px;
+    background-color: rgba(94,230,153,1);
 }
 
-#okButton{
-	
-	
+#gameInstructions {
+    position: relative;
+    height: 90px;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: rgba(235,215,90,1);
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
-
-
-#gameInstructions{
-	position: relative;
-	height: 90px;
-	font-size: 24px;
-	font-weight: bold;
-	background-color: rgba(235,215,90,1);
-	text-align: center;
-	vertical-align: middle;
-	line-height: 40px;
-	overflow-x:hidden;
-	overflow-y:auto;
-	
-}
