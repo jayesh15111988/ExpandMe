@@ -40,19 +40,19 @@
         if (can.height < window.innerHeight) {
             can.height = window.innerHeight;
         }
-       
 
-        
         this.addEventListener('mousemove', mouse_monitor);
 
         function drawFrameOnScreen() {
 
             canvasContext.globalCompositeOperation = "source-over";
-
-            canvasContext.fillStyle = "rgba(0,0,0,1)";
+            
+            //This is a Canvas background
+            canvasContext.fillStyle = "rgba(130,130,130,1)";
             canvasContext.fillRect(0, 0, can.width, can.height);
 
-            canvasContext.strokeStyle = "rgba(23,134,133,1)";
+            //This is drawing of actual ring which moves with cursor on screen
+            canvasContext.strokeStyle = "rgba(230,240,240,1)";
             canvasContext.beginPath();
             canvasContext.arc(mx, my, playerRadius, 0, 2 * Math.PI, false);
 
@@ -74,16 +74,16 @@
                     'timeSpent': totalTime,
                     'stage': stageNumber
                 });
-                
+
                 //Second parameter 1 indicates our game is over
                 displayInstructionsViewWithInstructions("", 1);
 
                 points = 0;
 
                 stageNumber = 1;
-                
+
                 gameLevel = 1;
-                
+
                 if (typeof intervalGame !== 'undefined') {
 
                     clearInterval(intervalGame);
@@ -92,6 +92,10 @@
 
             canvasContext.closePath();
             canvasContext.stroke();
+            var end = new Date().getTime();
+            var totalTime = (end - start) / 1000;
+            totalTime = Number((totalTime).toFixed(decimalPointsToRoundTo));
+            scoreBoard.innerHTML = '  Stage Number : ' + stageNumber + '<br/>  Points : ' + points + '<br/>  Points Required : ' + pointsRequired + '<br/>  Time Spent Last : ' + totalTime;
 
             for (var j = 0; j < particle.length; j++) {
 
@@ -110,8 +114,8 @@
                     playerRadius += par1.radius / 3;
                     points += par1.radius / 3;
 
-                    scoreBoard.innerHTML='Stage Number : '+stageNumber+'<br/>Points : '+Number((points).toFixed(decimalPointsToRoundTo))+'<br/>Points Required : '+pointsRequired;
-                    
+                    points = Number((points).toFixed(decimalPointsToRoundTo));
+
                     if (points >= pointsRequired) {
 
                         particleNumbers += particleNumbersIncrement;
@@ -123,23 +127,16 @@
 
                         clearInterval(intervalGame);
 
-                        var end = new Date().getTime();
-                        var totalTime = (end - start) / 1000;
-
-                        totalTime = Number((totalTime).toFixed(decimalPointsToRoundTo));
-                        points = Number((points).toFixed(decimalPointsToRoundTo));
-
                         summaryHolderForGameDuration.push({
                             'points': points,
                             'timeSpent': totalTime,
                             'stage': stageNumber
                         });
 
-                        
                         var goingToNextStageInstruction = "Congrats, your total Score is - " + points + " Maximum total time this Game played is " + totalTime + " Seconds. You are Going to the stage " + (++stageNumber);
                         points = 0;
-                        playerRadius=15;
-                        scoreBoard.innerHTML='Stage Number : '+(stageNumber+1)+'<br/>Current Points : '+Number((points).toFixed(decimalPointsToRoundTo))+'<br/>Points Required : '+pointsRequired;
+                        playerRadius = 15;
+                        scoreBoard.innerHTML = 'Stage Number : ' + (stageNumber) + '<br/>Current Points : ' + points + '<br/>Points Required : ' + pointsRequired + '<br/>  Time Spent Last : ' + totalTime;
                         displayInstructionsViewWithInstructions(goingToNextStageInstruction, 0)
 
                     }
@@ -181,12 +178,12 @@
             this.y = Math.random() * can.height;
 
             //Very first level of our game
-            
-var newVelocityIncrementor=stageNumber*ballsVelocityFactorIncrementParameter;
 
-console.log("Velocity incrementro is "+newVelocityIncrementor);
-            this.vx = (Math.random() * 20 *newVelocityIncrementor );
-            this.vy = (Math.random() * 20 *newVelocityIncrementor);
+            var newVelocityIncrementor = stageNumber * ballsVelocityFactorIncrementParameter;
+
+            
+            this.vx = (Math.random() * 20 * newVelocityIncrementor);
+            this.vy = (Math.random() * 20 * newVelocityIncrementor);
 
             this.color = getNewColorWithRandomRGBValues();
 
@@ -214,6 +211,6 @@ console.log("Velocity incrementro is "+newVelocityIncrementor);
         var r = Math.random() * 255 >> 0;
         var g = Math.random() * 255 >> 0;
         var b = Math.random() * 255 >> 0;
-        return "rgba(" + r + "," + g + "," + b + ",0.5)";
+        return "rgba(" + r + "," + g + "," + b + ","+movingBallsOpaciity+")";
 
     }

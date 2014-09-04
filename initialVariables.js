@@ -33,4 +33,5 @@
  var playerRadiusNextStageIncrement=10;
  var decimalPointsToRoundTo=2;
  var ballsVelocityFactorIncrementParameter=0.2;
+ var movingBallsOpaciity=0.8;
  var frameRate=33;

@@ -1,6 +1,6 @@
 #canvasWrap {
     position: relative;
-	z-index: 0;
+    z-index: 0;
 }
 
 #instructionsDiv {
@@ -14,36 +14,37 @@
     display: none;
 }
 
-#scoreBoard{
-	position: absolute;
-	z-index: :100;
-	top:0px;
-	width: 250px;
-	height: 90px;
-	font-size: 20px;
-	background-color: rgba(240,123,22,0.6);
-	border: 2px solid rgba(235,215,90,1);
-	line-height: 30px;
+#scoreBoard {
+    position: absolute;
+    z-index: :100;
+    top: 0px;
+    width: 250px;
+    height: 130px;
+    font-size: 20px;
+    background-color: rgba(240,123,22,0.6);
+    border: 2px solid rgba(235,215,90,1);
+    line-height: 30px;
 }
 
-div.horizontalLine{
-	position: absolute;
-	z-index: 200;
-	width: 230px;
-	height: 2px;
-
-	background-color: rgba(94,230,153,1);
+div.horizontalLine {
+    position: absolute;
+    z-index: 100;
+    width: 230px;
+    height: 2px;
+    background-color: rgba(94,230,153,1);
 }
 
-
-#horizontalLineFirst{
-	top:32px;
+#horizontalLineFirst {
+    top: 31px;
 }
 
-#horizontalLineSecond{
-	top:64px;
+#horizontalLineSecond {
+    top: 62px;
 }
 
+#horizontalLineThird {
+    top: 93px;
+}
 
 #expandMeCanvas {
     z-index: 0;
@@ -51,7 +52,7 @@ div.horizontalLine{
 
 button.generalButton {
     position: relative;
-	width: 175px;
+    width: 175px;
     height: 40px;
     background-color: rgba(94,230,153,1);
 }
@@ -68,4 +69,3 @@ button.generalButton {
     overflow-x: hidden;
     overflow-y: auto;
 }
-
