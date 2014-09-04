@@ -2,11 +2,14 @@ var mainInstructionsView = $("#instructionsDiv")[0];
 var okButton = $("#okButton");
 
 var actualGameInstructionsDiv = $("#gameInstructions")[0];
+var scoreBoard=$("#scoreBoard")[0];
+var horizontalLineFirst=$("#horizontalLineFirst")[0];
+var horizontalLineSecond=$("#horizontalLineSecond")[0];
 
-var instructionViewWidth = screen.width / 2;
+var instructionViewWidth  = screen.width / 2;
 var instructionViewHeight = screen.height / 2;
-var instructionViewTop = screen.height / 8;
-var instructionViewLeft = screen.width / 4;
+var instructionViewTop    = screen.height / 8;
+var instructionViewLeft   = screen.width / 4;
 
 mainInstructionsView.style.width = instructionViewWidth + 'px';
 mainInstructionsView.style.left = instructionViewLeft + 'px';
@@ -28,7 +31,8 @@ okButton.bind('click', function() {
     hideInstructionsView();
 
     start = new Date().getTime();
-
+    
+    
     moveBalls();
 
 });
@@ -38,7 +42,15 @@ okButton.bind('click', function() {
 //TO Do for tomorrow - Add screen in the upper right corner to show current points and points to advance to next level
 //That's it for this game and then move to grow up project
 //WIP
+//250-50 width-offset (random)
+var scoreBoardLeftDistance=(screen.width-300);
+scoreBoard.style.left=scoreBoardLeftDistance+'px';
 
+horizontalLineFirst.style.left=scoreBoardLeftDistance+10+'px';
+horizontalLineSecond.style.left=horizontalLineFirst.style.left;
+
+//Initial state we will show all initial data
+scoreBoard.innerHTML="Stage Number : 1<br/>Points : 0<br/>Points Required : 20";
 
 function displayInstructionsViewWithInstructions(instructions, isGameFinished) {
 
@@ -50,10 +62,6 @@ function displayInstructionsViewWithInstructions(instructions, isGameFinished) {
     mainInstructionsView.style.display = 'block';
 
     if (isGameFinished) {
-
-        //Add all points and total itme show it on the top
-        //Summarize all points on each stage and display in table format
-        //TO DO for tomorrow
         
         var totalPoints = 0;
         var timeSpent = 0;
@@ -77,7 +85,10 @@ function displayInstructionsViewWithInstructions(instructions, isGameFinished) {
 
         actualGameInstructionsDiv.innerHTML = "Sorry, your Game is Over. Total score reached so far upto this level is : " + totalPoints + " Maximum total time this game played is : " + timeSpent + " Seconds<br/><br/>";
         actualGameInstructionsDiv.innerHTML += HTMLTableString;
-
+        
+        //Reset scoreboard once game is Over - Show all default values of points and stages
+        scoreBoard.innerHTML="Stage Number : 1<br/>Points : 0<br/>Points Required : 20";
+        
         summaryHolderForGameDuration.length = 0;
 
     } else {

@@ -110,6 +110,8 @@
                     playerRadius += par1.radius / 3;
                     points += par1.radius / 3;
 
+                    scoreBoard.innerHTML='Stage Number : '+stageNumber+'<br/>Points : '+Number((points).toFixed(decimalPointsToRoundTo))+'<br/>Points Required : '+pointsRequired;
+                    
                     if (points >= pointsRequired) {
 
                         particleNumbers += particleNumbersIncrement;
@@ -133,9 +135,11 @@
                             'stage': stageNumber
                         });
 
+                        
                         var goingToNextStageInstruction = "Congrats, your total Score is - " + points + " Maximum total time this Game played is " + totalTime + " Seconds. You are Going to the stage " + (++stageNumber);
                         points = 0;
                         playerRadius=15;
+                        scoreBoard.innerHTML='Stage Number : '+(stageNumber+1)+'<br/>Current Points : '+Number((points).toFixed(decimalPointsToRoundTo))+'<br/>Points Required : '+pointsRequired;
                         displayInstructionsViewWithInstructions(goingToNextStageInstruction, 0)
 
                     }
