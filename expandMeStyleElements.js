@@ -33,6 +33,13 @@ okButton.bind('click', function() {
 
 });
 
+//TO DO In future - Add control parameters on screen so that user can tweak them online
+
+//TO Do for tomorrow - Add screen in the upper right corner to show current points and points to advance to next level
+//That's it for this game and then move to grow up project
+//WIP
+
+
 function displayInstructionsViewWithInstructions(instructions, isGameFinished) {
 
     if (typeof intervalGame != "undefined") {
@@ -68,9 +75,9 @@ function displayInstructionsViewWithInstructions(instructions, isGameFinished) {
         totalPoints = Number((totalPoints).toFixed(decimalPointsToRoundTo));
         timeSpent = Number((timeSpent).toFixed(decimalPointsToRoundTo));
 
-        actualGameInstructionsDiv.innerHTML = "Sorry, your Game is Over. Total score reached so far upto this level is : " + totalPoints + "Maximum total time this game played is : " + timeSpent + " Seconds<br/><br/>";
+        actualGameInstructionsDiv.innerHTML = "Sorry, your Game is Over. Total score reached so far upto this level is : " + totalPoints + " Maximum total time this game played is : " + timeSpent + " Seconds<br/><br/>";
         actualGameInstructionsDiv.innerHTML += HTMLTableString;
-        
+
         summaryHolderForGameDuration.length = 0;
 
     } else {

@@ -1,5 +1,3 @@
- //Level of the game user is in - Starts with level one
- var gameLevelNumber = -1;
  var gameLevel;
  var maximumBallRadius=20;
  //Did user die?
@@ -27,12 +25,12 @@
 
  var can = document.getElementById('expandMeCanvas');
  var canvasContext = can.getContext('2d');
- var playerRadius = 10;
+ var playerRadius = 15;
 
  var particleNumbersIncrement=10;
  var pointsRequiredToGoToNextStepIncrement=20;
  var playerRadiusReductionFactorIncrement=0.1;
  var playerRadiusNextStageIncrement=10;
  var decimalPointsToRoundTo=2;
- var ballsVelocityFactorIncrementParameter=0.90;
+ var ballsVelocityFactorIncrementParameter=0.2;
  var frameRate=33;

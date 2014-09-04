@@ -81,7 +81,7 @@
                 points = 0;
 
                 stageNumber = 1;
-                gameLevelNumber = -1;
+                
                 gameLevel = 1;
                 
                 if (typeof intervalGame !== 'undefined') {
@@ -135,7 +135,7 @@
 
                         var goingToNextStageInstruction = "Congrats, your total Score is - " + points + " Maximum total time this Game played is " + totalTime + " Seconds. You are Going to the stage " + (++stageNumber);
                         points = 0;
-                        playerRadius=10;
+                        playerRadius=15;
                         displayInstructionsViewWithInstructions(goingToNextStageInstruction, 0)
 
                     }
@@ -173,19 +173,16 @@
 
         function createNewRandomBall() {
 
-            this.x = Math.random() * 100;
-            this.y = Math.random() * 100;
+            this.x = Math.random() * can.width;
+            this.y = Math.random() * can.height;
 
             //Very first level of our game
-            if (gameLevelNumber == -1) {
-                gameLevelNumber = 1;
-            } else {
+            
+var newVelocityIncrementor=stageNumber*ballsVelocityFactorIncrementParameter;
 
-                //This factor determines how fast other balls move on the screen
-                gameLevelNumber =gameLevelNumber * ballsVelocityFactorIncrementParameter;
-            }
-            this.vx = (Math.random() * 20 * gameLevelNumber);
-            this.vy = (Math.random() * 20 * gameLevelNumber);
+console.log("Velocity incrementro is "+newVelocityIncrementor);
+            this.vx = (Math.random() * 20 *newVelocityIncrementor );
+            this.vy = (Math.random() * 20 *newVelocityIncrementor);
 
             this.color = getNewColorWithRandomRGBValues();
 
