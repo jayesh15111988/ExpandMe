@@ -7,7 +7,7 @@ Just keep moving around and try to collide with bigger fishes to increase player
 
 Game can be played online at
 
-http://www.jayeshkawli.com/jayeshkawli/canvas/ExpandMe/expandMe.html
+http://www.jayeshkawli.com/Canvas/ExpandMe/expandMe.html
 
 As usual - any suggestions, comments or feature requests are welcome - I will try my best to incorporate them in the
 next release
